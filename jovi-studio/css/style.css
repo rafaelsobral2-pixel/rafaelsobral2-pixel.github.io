@@ -1,0 +1,237 @@
+/* ============================================================
+   JOVI Studio — CSS próprio (autoral)
+   Fontes locais, frame do dispositivo, gauge de score,
+   skeleton shimmer, barra de progresso, toast e transições.
+   Complementa o Tailwind (utilitários) com componentes.
+   ============================================================ */
+
+/* ---------- Fontes (embutidas localmente, sem CDN) ---------- */
+@font-face {
+  font-family: "Sora"; font-style: normal; font-weight: 600;
+  font-display: swap; src: url("../assets/fonts/sora-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Sora"; font-style: normal; font-weight: 700;
+  font-display: swap; src: url("../assets/fonts/sora-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Sora"; font-style: normal; font-weight: 800;
+  font-display: swap; src: url("../assets/fonts/sora-latin-800-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Manrope"; font-style: normal; font-weight: 400;
+  font-display: swap; src: url("../assets/fonts/manrope-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Manrope"; font-style: normal; font-weight: 500;
+  font-display: swap; src: url("../assets/fonts/manrope-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Manrope"; font-style: normal; font-weight: 600;
+  font-display: swap; src: url("../assets/fonts/manrope-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Manrope"; font-style: normal; font-weight: 700;
+  font-display: swap; src: url("../assets/fonts/manrope-latin-700-normal.woff2") format("woff2");
+}
+
+:root {
+  --jovi: #2f5bff;
+  --jovi-600: #1e3fd0;
+  --navy: #0b1220;
+  --pillar-score: #f59e0b;
+  --pillar-caption: #8b5cf6;
+  --pillar-share: #10b981;
+  --pillar-perf: #f97316;
+  --ring: rgba(47, 91, 255, 0.35);
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: "Manrope", system-ui, sans-serif;
+  /* Ambiente da "mesa": fundo JOVI para destacar o device no desktop */
+  background:
+    radial-gradient(1100px 700px at 78% -10%, #24409e 0%, transparent 55%),
+    radial-gradient(900px 600px at 0% 100%, #12225e 0%, transparent 50%),
+    var(--navy);
+  min-height: 100vh;
+}
+
+/* ---------- Frame do dispositivo (mobile-first) ---------- */
+.device {
+  position: relative;
+  width: 100%;
+  max-width: 402px;
+  height: 860px;
+  max-height: calc(100dvh - 32px);
+  margin: 16px auto;
+  background: #ffffff;
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: var(--phone, 0 40px 90px -30px rgba(11, 18, 32, 0.55));
+  border: 10px solid #05070f;
+  display: flex;
+  flex-direction: column;
+}
+/* Em telas realmente pequenas o app ocupa tudo (mobile de verdade) */
+@media (max-width: 460px) {
+  .device {
+    max-width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+    border-width: 0;
+  }
+  body { background: #ffffff; }
+}
+
+.notch {
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 132px; height: 26px;
+  background: #05070f;
+  border-radius: 0 0 16px 16px;
+  z-index: 60;
+}
+
+.statusbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 22px 4px;
+  font-size: 13px; font-weight: 600; color: #0b1220;
+  flex-shrink: 0;
+}
+.statusbar.on-dark { color: #eaf0ff; }
+
+/* Área rolável das telas */
+.viewport {
+  position: relative;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #c9d3ee transparent;
+}
+.viewport::-webkit-scrollbar { width: 6px; }
+.viewport::-webkit-scrollbar-thumb { background: #c9d3ee; border-radius: 99px; }
+
+/* ---------- Sistema de telas + transição ---------- */
+.screen { display: none; }
+.screen.is-active { display: block; animation: screen-in .42s cubic-bezier(.22,.61,.36,1); }
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Reveal em sequência (page load) ---------- */
+.reveal { opacity: 0; transform: translateY(12px); animation: reveal .55s forwards; }
+@keyframes reveal { to { opacity: 1; transform: translateY(0); } }
+
+/* ---------- Badges de score sobre as fotos ---------- */
+.score-badge {
+  position: absolute; bottom: 8px; left: 8px;
+  min-width: 30px; padding: 2px 8px;
+  border-radius: 8px;
+  font-family: "Sora", sans-serif;
+  font-weight: 700; font-size: 12px; color: #fff;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+}
+.sb-high { background: var(--pillar-share); }   /* >= 85 */
+.sb-good { background: var(--jovi); }            /* 75–84 */
+.sb-mid  { background: var(--pillar-score); }    /* 65–74 */
+.sb-low  { background: #64748b; }                /* < 65  */
+
+/* ---------- Gauge circular do Score Visual ---------- */
+.gauge { position: relative; width: 176px; height: 176px; margin: 0 auto; }
+.gauge svg { transform: rotate(-90deg); }
+.gauge .track { fill: none; stroke: #e8edfb; stroke-width: 14; }
+.gauge .fill {
+  fill: none; stroke: var(--pillar-share); stroke-width: 14; stroke-linecap: round;
+  transition: stroke-dashoffset 1.1s cubic-bezier(.22,.61,.36,1), stroke 1.1s ease;
+}
+.gauge .center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.gauge .num { font-family: "Sora", sans-serif; font-weight: 800; font-size: 48px; line-height: 1; color: #0b1220; }
+.gauge .den { font-size: 13px; color: #64748b; margin-top: 2px; }
+
+/* ---------- Barras das métricas ---------- */
+.metric-track { height: 6px; border-radius: 99px; background: #eef1f8; overflow: hidden; }
+.metric-fill { height: 100%; width: 0; border-radius: 99px; transition: width 1s cubic-bezier(.22,.61,.36,1); }
+
+/* ---------- Skeleton shimmer (Pilar 5) ---------- */
+.skeleton {
+  position: relative; overflow: hidden;
+  background: #eef1f8; border-radius: 12px;
+}
+.skeleton::after {
+  content: ""; position: absolute; inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.75), transparent);
+  animation: shimmer 1.25s infinite;
+}
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+/* ---------- Barra de progresso ---------- */
+.progress { height: 10px; border-radius: 99px; background: #e8edfb; overflow: hidden; }
+.progress > span {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--jovi), #5f83ff);
+  border-radius: 99px; transition: width .18s linear;
+}
+
+/* Anel pulsante da splash */
+.pulse-ring { animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: .55; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: absolute; left: 50%; bottom: 96px; transform: translate(-50%, 24px);
+  background: #0b1220; color: #fff;
+  padding: 12px 18px; border-radius: 14px;
+  font-weight: 600; font-size: 14px;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 12px 30px -8px rgba(0,0,0,.5);
+  opacity: 0; pointer-events: none; z-index: 80;
+  transition: opacity .3s ease, transform .3s cubic-bezier(.22,.61,.36,1);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Seleção de fotos (Seletor Inteligente) ---------- */
+.pick { position: relative; border-radius: 14px; overflow: hidden; cursor: pointer; }
+.pick img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pick .check {
+  position: absolute; top: 6px; right: 6px;
+  width: 24px; height: 24px; border-radius: 99px;
+  background: #fff; border: 2px solid #cdd6ee;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .16s ease;
+}
+.pick.selected { outline: 3px solid var(--jovi); outline-offset: -3px; }
+.pick.selected .check { background: var(--jovi); border-color: var(--jovi); transform: scale(1.05); }
+.pick.selected .check svg { opacity: 1; }
+.pick .check svg { opacity: 0; transition: opacity .15s ease; }
+.pick.best::after {
+  content: "★ Melhor"; position: absolute; top: 6px; left: 6px;
+  background: var(--pillar-share); color: #fff;
+  font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px;
+}
+
+/* ---------- Bottom nav ---------- */
+.tabbar { flex-shrink: 0; }
+.tab { color: #94a3b8; transition: color .2s ease; }
+.tab.active { color: var(--jovi); }
+.tab .dot { opacity: 0; }
+.tab.active .dot { opacity: 1; }
+
+/* Acessibilidade: respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::after, *::before { animation: none !important; transition: none !important; }
+}
