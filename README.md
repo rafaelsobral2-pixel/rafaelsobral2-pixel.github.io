@@ -11,23 +11,23 @@ Operations e CX com 8 anos de estrada, agora estudando Análise e Desenvolviment
 ### [Kairós SUS](./kairos-sus) · 2026.2
 Plataforma cidadã para reduzir o tempo de espera nas UPAs da Zona Sul de São Paulo. Triagem conversacional pelo WhatsApp (Protocolo de Manchester), roteamento inteligente entre as 11 UPAs e painel preditivo para a gestão (escala NEDOCS).
 
-**Papel**: concepção de produto, pesquisa, modelagem, UI e narrativa
-**Stack modelada**: Java Web · MVC · DAO · Singleton · Strategy · Oracle 19c
-**Dados reais**: CNES/DataSUS · SEADE · InfoDengue (Fiocruz) · INMET · IBGE Censo 2022 · Ouvidoria SMS-SP
-**Entregas**: PDF de 20 slides · vídeo pitch de 3 min · modelagem UML com 13 classes
+**Papel**: concepção de produto, pesquisa, modelagem, UI e narrativa  
+**Stack modelada**: Java Web · MVC · DAO · Singleton · Strategy · Oracle 19c  
+**Dados reais**: CNES/DataSUS · SEADE · InfoDengue (Fiocruz) · INMET · IBGE Censo 2022 · Ouvidoria SMS-SP  
+**Entregas**: PDF de 20 slides · vídeo pitch de 3 min · modelagem UML com 13 classes  
 
 ### [JOVI Studio](./jovi-studio) · Challenge FIAP × JOVI 2026
 Experiência web mobile-first de pós-captura: o usuário seleciona as fotos, o app calcula um Score Visual real (0–100) nos próprios pixels via Canvas, sugere legendas e leva ao compartilhamento. Tudo client-side, sem servidor e sem upload de imagem.
 
-**Stack**: HTML5 · CSS3 · JavaScript vanilla · Tailwind CSS · Canvas API
-**Demo ao vivo**: [rafaelsobral2-pixel.github.io/jovi-studio](https://rafaelsobral2-pixel.github.io/jovi-studio/)
-**Entregas**: app web funcional · MER com 7 entidades (3FN) · apresentação da Sprint 2
+**Stack**: HTML5 · CSS3 · JavaScript vanilla · Tailwind CSS · Canvas API  
+**Demo ao vivo**: [rafaelsobral2-pixel.github.io/jovi-studio](https://rafaelsobral2-pixel.github.io/jovi-studio/)  
+**Entregas**: app web funcional · MER com 7 entidades (3FN) · apresentação da Sprint 2  
 
 ### [Argos](./argos) · 2026.1 · Nota 18/20
 Plataforma de resposta rápida a desastres combinando imagens de satélite e IA para priorizar o envio de equipes em cenários de emergência. Projeto da Global Solution FIAP do primeiro semestre.
 
-**Papel**: concepção, arquitetura de produto, prototipagem e pitch
-**Entregas**: PDF, protótipo, modelagem, vídeo pitch
+**Papel**: concepção, arquitetura de produto, prototipagem e pitch  
+**Entregas**: PDF, protótipo, modelagem, vídeo pitch  
 
 ---
 
