@@ -1,0 +1,17 @@
+# Dependências (não usadas em runtime — Tailwind já vem compilado)
+node_modules/
+package-lock.json
+
+# Artefatos de build
+*.log
+.cache/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
